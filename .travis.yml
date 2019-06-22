@@ -63,6 +63,8 @@ env:
     # Set the python path manually to include /usr/-/python2.7/dist-packages
     # as this is where apt-get installs python packages.
     - PYTHONPATH=$PYTHONPATH:/usr/lib/python2.7/dist-packages:/usr/local/lib/python2.7/dist-packages
+    - CAMERA_FOLDER=~/camera_ws
+    - LOCOBOT_FOLDER=~/low_cost_ws
 
 ################################################################################
 
@@ -83,12 +85,6 @@ before_install:
   # Prepare rosdep to install dependencies.
   - sudo rosdep init
   - rosdep update
-  - sudo apt-get -y install ros-$ROS_DISTRO-desktop-full ros-kinetic-dynamixel-motor 
-  - sudo apt-get -y install ros-kinetic-moveit ros-kinetic-trac-ik ros-kinetic-ar-track-alvar ros-kinetic-turtlebot-* ros-kinetic-move-base 
-  - sudo apt-get -y install ros-kinetic-ros-control ros-kinetic-gazebo-ros-control
-  - sudo apt-get -y install ros-kinetic-ros-controllers ros-kinetic-navigation ros-kinetic-rgbd-launch
-  - sudo apt-get -y install ros-kinetic-kdl-parser-py ros-kinetic-orocos-kdl
-  - sudo apt-get -y install ros-kinetic-python-orocos-kdl ros-kinetic-turtlebot
   # Install camera
   - sudo apt-key adv --keyserver keys.gnupg.net --recv-key C8B3A55A6F3EFCDE || sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key C8B3A55A6F3EFCDE
   - sudo add-apt-repository "deb http://realsense-hw-public.s3.amazonaws.com/Debian/apt-repo xenial main" -u
@@ -100,6 +96,41 @@ before_install:
   - sudo apt-get -y install librealsense2-utils=${version}
   - sudo apt-get -y install librealsense2-dev=${version}
   - sudo apt-get -y install librealsense2-dbg=${version}
+  # Install other things
+  - sudo apt-get -y install ros-$ROS_DISTRO-desktop-full ros-kinetic-dynamixel-motor 
+  - sudo apt-get -y install ros-kinetic-moveit ros-kinetic-trac-ik ros-kinetic-ar-track-alvar ros-kinetic-turtlebot-* ros-kinetic-move-base 
+  - sudo apt-get -y install ros-kinetic-ros-control ros-kinetic-gazebo-ros-control
+  - sudo apt-get -y install ros-kinetic-ros-controllers ros-kinetic-navigation ros-kinetic-rgbd-launch
+  - sudo apt-get -y install ros-kinetic-kdl-parser-py ros-kinetic-orocos-kdl
+  - sudo apt-get -y install ros-kinetic-python-orocos-kdl ros-kinetic-turtlebot
+
+install:  
+  - mkdir -p $CAMERA_FOLDER/src
+	- cd $CAMERA_FOLDER/src/
+	- catkin_init_workspace
+	- git clone https://github.com/intel-ros/realsense.git
+	- cd realsense
+	- git checkout a036d81bcc6890658104a8de1cba24538effd6e3
+  - cd $CAMERA_FOLDER
+  - catkin_make clean
+  - catkin_make -DCATKIN_ENABLE_TESTING=False -DCMAKE_BUILD_TYPE=Release
+  - catkin_make install
+
+	- mkdir -p $LOCOBOT_FOLDER/src
+	- cd $LOCOBOT_FOLDER/src
+	- catkin_init_workspace
+	- git clone --recurse-submodules https://github.com/facebookresearch/pyrobot.git
+  - cd $LOCOBOT_FOLDER
+  - rosdep update 
+  - rosdep install --from-paths src -i -y
+  - cd $LOCOBOT_FOLDER/src/pyrobot/robots/LoCoBot/install
+  - chmod +x install_orb_slam2.sh
+  - source install_orb_slam2.sh
+  - cd $LOCOBOT_FOLDER
+  - catkin_make
+  
+  - source $CAMERA_FOLDER/devel/setup.bash
+  - source $LOCOBOT_FOLDER/devel/setup.bash
 
 # Create a catkin workspace with the package under integration.
 install:
@@ -113,7 +144,6 @@ install:
   - source devel/setup.bash
   # Add the package under integration to the workspace using a symlink.
   - cd ~/catkin_ws/src
-  - ln -s $CI_SOURCE_PATH .
 
 # Install all dependencies, using wstool first and rosdep second.
 # wstool looks for a ROSINSTALL_FILE defined in the environment variables.
