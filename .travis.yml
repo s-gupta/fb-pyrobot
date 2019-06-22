@@ -69,15 +69,15 @@ env:
 # Install system dependencies, namely a very barebones ROS setup.
 
 before_install:
-  - sudo apt-get install -y vim git python-pip python-dev python-virtual libssl-dev libusb-1.0-0-dev libgtk-3-dev libglfw3-dev
-  - sudo pip install --upgrade cryptography
-  - sudo python -m easy_install --upgrade pyOpenSSL
-  - sudo pip install --upgrade pip
   - sudo sh -c "echo \"deb http://packages.ros.org/ros/ubuntu $ROS_CI_DESKTOP main\" > /etc/apt/sources.list.d/ros-latest.list"
   - sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
   - sudo apt-get update -qq
   - sudo apt-get install dpkg
   - sudo apt-get install -y python-catkin-pkg python-rosdep python-wstool ros-$ROS_DISTRO-ros-base
+  - sudo apt-get install -y git python-pip python-dev python-virtual libssl-dev libusb-1.0-0-dev libgtk-3-dev libglfw3-dev
+  - sudo pip install --upgrade cryptography
+  - sudo python -m easy_install --upgrade pyOpenSSL
+  - sudo pip install --upgrade pip
   - sudo apt-get -y install ros-$ROS_DISTRO-desktop-full
   - source /opt/ros/$ROS_DISTRO/setup.bash
   # Prepare rosdep to install dependencies.
