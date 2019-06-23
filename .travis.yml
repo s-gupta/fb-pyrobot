@@ -97,7 +97,6 @@ before_install:
   - sudo apt-get -y install librealsense2-udev-rules=${REALSENSE_VERSION}
   - sudo apt-get -y install librealsense2-dev=${REALSENSE_VERSION}
   - sudo apt-get -y install librealsense2-dbg=${REALSENSE_VERSION}
-  - sudo modprobe uvcvideo
   - sudo modinfo uvcvideo | grep "version:"
   # Install other things
   - sudo apt-get -y install ros-$ROS_DISTRO-desktop-full ros-kinetic-dynamixel-motor 
