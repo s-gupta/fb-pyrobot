@@ -74,6 +74,8 @@ env:
 before_install:
   - sudo sed -i '/deb-src/s/^# //' /etc/apt/sources.list
   - cat /etc/apt/sources.list
+  - sudo apt-get update -qq
+  - sudo apt-get dist-upgrade
   - apt source linux-image-4.15.0-1028-gcp
   - sudo apt-get update -qq
   - sudo sh -c "echo \"deb http://packages.ros.org/ros/ubuntu $ROS_CI_DESKTOP main\" > /etc/apt/sources.list.d/ros-latest.list"
