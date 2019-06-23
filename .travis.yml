@@ -83,7 +83,6 @@ before_install:
   - sudo python -m easy_install --upgrade pyOpenSSL
   - sudo pip install --upgrade pip
   - sudo apt-get -y install ros-$ROS_DISTRO-desktop-full
-  - sudo rm /etc/ros/rosdep/sources.list.d/20-default.list
   - source /opt/ros/$ROS_DISTRO/setup.bash
   # Prepare rosdep to install dependencies.
   - sudo rosdep init
