@@ -79,6 +79,7 @@ before_install:
   - sudo apt-get install linux-signed-gcp
   - sudo apt-get install -y python-catkin-pkg python-rosdep python-wstool ros-$ROS_DISTRO-ros-base
   - sudo apt-get install linux-headers-$(uname -r)
+  - sudo apt-get install linux-headers-4.15.0-1034-gcp
   # echo linux-image-4.15.0-1028-gcp hold | sudo dpkg --set-selections
   # echo linux-signed-gcp hold | sudo dpkg --set-selections
   # echo linux-image-generic hold | sudo dpkg --set-selections
