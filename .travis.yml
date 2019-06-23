@@ -75,7 +75,7 @@ before_install:
   - sudo sed -i '/deb-src/s/^# //' /etc/apt/sources.list
   - cat /etc/apt/sources.list
   - sudo apt-get update -qq
-  - sudo apt-get dist-upgrade
+  - sudo apt install linux-image-4.15.0-1028-gcp
   - apt source linux-image-4.15.0-1028-gcp
   - sudo apt-get update -qq
   - sudo sh -c "echo \"deb http://packages.ros.org/ros/ubuntu $ROS_CI_DESKTOP main\" > /etc/apt/sources.list.d/ros-latest.list"
@@ -99,6 +99,7 @@ before_install:
   # Prepare rosdep to install dependencies.
   - sudo rosdep init
   - rosdep update
+  - sudo apt-get -y install ros-kinetic-librealsense
   # Install camera
   - sudo apt-key adv --keyserver keys.gnupg.net --recv-key C8B3A55A6F3EFCDE || sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key C8B3A55A6F3EFCDE
   - sudo add-apt-repository "deb http://realsense-hw-public.s3.amazonaws.com/Debian/apt-repo xenial main" -u
@@ -117,6 +118,7 @@ before_install:
   - sudo apt-get -y install librealsense2-dev=${REALSENSE_VERSION}
   - sudo apt-get -y install librealsense2-dbg=${REALSENSE_VERSION}
   - sudo modinfo uvcvideo | grep "version:"
+  - ls
   # Install other things
   - sudo apt-get -y install ros-$ROS_DISTRO-desktop-full ros-kinetic-dynamixel-motor 
   - sudo apt-get -y install ros-kinetic-moveit ros-kinetic-trac-ik ros-kinetic-ar-track-alvar ros-kinetic-turtlebot-* ros-kinetic-move-base 
