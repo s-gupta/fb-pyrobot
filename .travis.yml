@@ -101,11 +101,12 @@ before_install:
   - sudo modinfo uvcvideo | grep "version:"
   # Install other things
   - sudo apt-get -y install ros-$ROS_DISTRO-desktop-full ros-kinetic-dynamixel-motor 
-  - sudo apt-get -y install ros-kinetic-moveit ros-kinetic-trac-ik ros-kinetic-ar-track-alvar ros-kinetic-turtlebot-* ros-kinetic-move-base 
-  - sudo apt-get -y install ros-kinetic-ros-control ros-kinetic-gazebo-ros-control
-  - sudo apt-get -y install ros-kinetic-ros-controllers ros-kinetic-navigation ros-kinetic-rgbd-launch
-  - sudo apt-get -y install ros-kinetic-kdl-parser-py ros-kinetic-orocos-kdl
-  - sudo apt-get -y install ros-kinetic-python-orocos-kdl ros-kinetic-turtlebot
+  - sudo apt-get -y install ros-kinetic-moveit ros-kinetic-trac-ik ros-kinetic-move-base 
+  - sudo apt-get -y install ros-kinetic-ros-control ros-kinetic-gazebo-ros-control ros-kinetic-ros-controllers 
+  - sudo apt-get -y install ros-kinetic-kdl-parser-py ros-kinetic-orocos-kdl ros-kinetic-python-orocos-kdl 
+  - sudo apt-get -y install ros-kinetic-navigation ros-kinetic-rgbd-launch
+  - sudo apt-get -y install ros-kinetic-turtlebot ros-kinetic-turtlebot-* 
+  - sudo apt-get -y install ros-kinetic-ar-track-alvar 
 
 install:  
   - mkdir -p $CAMERA_FOLDER/src
