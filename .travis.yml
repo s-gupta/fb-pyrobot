@@ -78,6 +78,10 @@ before_install:
   - sudo apt-get install dpkg
   - sudo apt-get install -y python-catkin-pkg python-rosdep python-wstool ros-$ROS_DISTRO-ros-base
   - sudo apt-get install linux-headers-$(uname -r)
+  - echo linux-image-4.15.0-1028-gcp hold | sudo dpkg --set-selections
+  - echo linux-signed-gcp hold | sudo dpkg --set-selections
+  # echo linux-image-generic hold | sudo dpkg --set-selections
+  # echo linux-generic hold | sudo dpkg --set-selections
   - sudo apt-get install -y git python-pip python-dev python-virtualenv libssl-dev libusb-1.0-0-dev libgtk-3-dev libglfw3-dev
   - sudo pip install --upgrade cryptography
   - sudo python -m easy_install --upgrade pyOpenSSL
